@@ -1,0 +1,29 @@
+.build-base:
+  image: tmaier/docker-compose:latest
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker info
+    - docker-compose --version
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --pull -t "$IMAGE_NAME" "$BUILD_CONTEXT"
+    - sh run_test.sh "$BUILD_CONTEXT"
+    - docker push "$IMAGE_NAME"
+
+build gcc8:
+  extends: .build-base
+  variables:
+    BUILD_CONTEXT: gcc8
+    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_REF_SLUG"
+  except:
+    - master
+
+build gcc8 master:
+  extends: .build-base
+  variables:
+    BUILD_CONTEXT: gcc8
+    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT"
+  only:
+    - master
