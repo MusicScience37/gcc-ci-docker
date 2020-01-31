@@ -11,6 +11,11 @@
     - docker build --pull -t "$IMAGE_NAME" "$BUILD_CONTEXT"
     - sh run_test.sh "$BUILD_CONTEXT"
     - docker push "$IMAGE_NAME"
+  artifacts:
+    paths:
+      - test/build_gcc8
+    when: always
+    expire_in: '30 days'
 
 build gcc8:
   extends: .build-base
