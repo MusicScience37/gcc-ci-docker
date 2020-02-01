@@ -48,3 +48,19 @@ build gcc8 master:
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT"
   only:
     - master
+
+build gcc9:
+  extends: .build-base
+  variables:
+    BUILD_CONTEXT: gcc9
+    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_REF_SLUG"
+  except:
+    - master
+
+build gcc9 master:
+  extends: .build-base
+  variables:
+    BUILD_CONTEXT: gcc9
+    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT"
+  only:
+    - master
