@@ -8,6 +8,7 @@ The version of GCC is as following:
 
 | Tag of Container | Version of GCC |
 | :--------------- | :------------- |
+| gcc7             | 7.4.0          |
 | gcc8             | 8.3.0          |
 
 ## Repositories
