@@ -25,14 +25,8 @@ The version of GCC is as following:
 | Tag of Container | Version of GCC |
 | :--------------- | :------------- |
 | gcc7             | 7.5.0          |
-| gcc8 (latest)    | 8.3.0          |
-| gcc9             | 9.2.1          |
-
-The container image with tag `gcc9` uses unstable version of lcov
-because the latest stable version of lcov doesn't support
-GCC version 9.
-So the container image with tag `gcc9` is less stable than
-one with tag `gcc8`.
+| gcc8             | 8.3.0          |
+| gcc9 (latest)    | 9.2.1          |
 
 ## Container Registries
 
