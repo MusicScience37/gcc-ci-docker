@@ -1,9 +1,9 @@
-FROM registry.gitlab.com/musicscience37_ci/cpp-base-image-docker:v1-1
+FROM registry.gitlab.com/musicscience37_ci/cpp-base-image-docker:v2-0
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        gcc-7=7.5.0-3ubuntu1~19.10 \
-        g++-7=7.5.0-3ubuntu1~19.10 \
+        gcc-7=7.5.0-6ubuntu2 \
+        g++-7=7.5.0-6ubuntu2 \
         lcov=1.14-2 && \
     apt-get autoremove && \
     apt-get autoclean && \
