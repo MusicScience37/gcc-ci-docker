@@ -24,10 +24,9 @@ The version of GCC is as following:
 
 | Tag of Container | Version of GCC |
 | :--------------- | :------------- |
-| gcc7             | 7.5.0          |
 | gcc8             | 8.4.0          |
-| gcc9 (latest)    | 9.3.0          |
-| gcc10 (testing)  | 10.0.1         |
+| gcc9             | 9.3.0          |
+| gcc10            | 10.0.1         |
 
 ## Container Registries
 
