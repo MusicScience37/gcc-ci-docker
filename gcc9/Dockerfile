@@ -1,9 +1,9 @@
-FROM registry.gitlab.com/musicscience37_ci/cpp-base-image-docker:v2-2
+FROM registry.gitlab.com/musicscience37_ci/cpp-base-image-docker:v3-0
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        gcc-9=9.3.0-10ubuntu2 \
-        g++-9=9.3.0-10ubuntu2 \
+        gcc-9=9.3.0-17ubuntu1~20.04 \
+        g++-9=9.3.0-17ubuntu1~20.04 \
         lcov=1.14-2 && \
     apt-get autoremove && \
     apt-get autoclean && \
