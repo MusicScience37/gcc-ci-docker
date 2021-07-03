@@ -1,3 +1,6 @@
+variables:
+  HUB_REPO_NAME: musicscience37/gcc-ci
+
 .build-base:
   image: tmaier/docker-compose:latest
   stage: build
@@ -15,7 +18,14 @@
     paths:
       - test/build_$BUILD_CONTEXT
     when: always
-    expire_in: '30 days'
+    expire_in: "30 days"
+
+.build-hub-base:
+  extends: .build-base
+  after_script:
+    - docker login -u "$HUB_USER_NAME" -p "$HUB_ACCESS_TOKEN"
+    - docker tag "$IMAGE_NAME" "$HUB_IMAGE_NAME"
+    - docker push "$HUB_IMAGE_NAME"
 
 build gcc8:
   extends: .build-base
@@ -24,6 +34,15 @@ build gcc8:
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_REF_SLUG"
   except:
     - master
+    - tags
+
+build gcc8 tag:
+  extends: .build-base
+  variables:
+    BUILD_CONTEXT: gcc8
+    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_TAG"
+  only:
+    - tags
 
 build gcc8 master:
   extends: .build-base
@@ -40,6 +59,15 @@ build gcc9:
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_REF_SLUG"
   except:
     - master
+    - tags
+
+build gcc9 tag:
+  extends: .build-base
+  variables:
+    BUILD_CONTEXT: gcc9
+    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_TAG"
+  only:
+    - tags
 
 build gcc9 master:
   extends: .build-base
@@ -56,6 +84,15 @@ build gcc10:
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_REF_SLUG"
   except:
     - master
+    - tags
+
+build gcc10 tag:
+  extends: .build-base
+  variables:
+    BUILD_CONTEXT: gcc10
+    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_TAG"
+  only:
+    - tags
 
 build gcc10 master:
   extends: .build-base
