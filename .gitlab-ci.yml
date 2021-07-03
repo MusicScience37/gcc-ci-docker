@@ -41,6 +41,7 @@ build gcc8 tag:
   variables:
     BUILD_CONTEXT: gcc8
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_TAG"
+    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT-$CI_COMMIT_TAG"
   only:
     - tags
 
@@ -49,6 +50,7 @@ build gcc8 master:
   variables:
     BUILD_CONTEXT: gcc8
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT"
+    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT"
   only:
     - master
 
@@ -66,6 +68,7 @@ build gcc9 tag:
   variables:
     BUILD_CONTEXT: gcc9
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_TAG"
+    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT-$CI_COMMIT_TAG"
   only:
     - tags
 
@@ -74,6 +77,7 @@ build gcc9 master:
   variables:
     BUILD_CONTEXT: gcc9
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT"
+    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT"
   only:
     - master
 
@@ -91,6 +95,7 @@ build gcc10 tag:
   variables:
     BUILD_CONTEXT: gcc10
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_TAG"
+    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT-$CI_COMMIT_TAG"
   only:
     - tags
 
@@ -99,5 +104,6 @@ build gcc10 master:
   variables:
     BUILD_CONTEXT: gcc10
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT"
+    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT"
   only:
     - master
