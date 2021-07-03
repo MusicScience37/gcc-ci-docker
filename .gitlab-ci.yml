@@ -37,7 +37,7 @@ build gcc8:
     - tags
 
 build gcc8 tag:
-  extends: .build-base
+  extends: .build-hub-base
   variables:
     BUILD_CONTEXT: gcc8
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_TAG"
@@ -45,7 +45,7 @@ build gcc8 tag:
     - tags
 
 build gcc8 master:
-  extends: .build-base
+  extends: .build-hub-base
   variables:
     BUILD_CONTEXT: gcc8
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT"
@@ -62,7 +62,7 @@ build gcc9:
     - tags
 
 build gcc9 tag:
-  extends: .build-base
+  extends: .build-hub-base
   variables:
     BUILD_CONTEXT: gcc9
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_TAG"
@@ -70,7 +70,7 @@ build gcc9 tag:
     - tags
 
 build gcc9 master:
-  extends: .build-base
+  extends: .build-hub-base
   variables:
     BUILD_CONTEXT: gcc9
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT"
@@ -87,7 +87,7 @@ build gcc10:
     - tags
 
 build gcc10 tag:
-  extends: .build-base
+  extends: .build-hub-base
   variables:
     BUILD_CONTEXT: gcc10
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_TAG"
@@ -95,7 +95,7 @@ build gcc10 tag:
     - tags
 
 build gcc10 master:
-  extends: .build-base
+  extends: .build-hub-base
   variables:
     BUILD_CONTEXT: gcc10
     IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT"
