@@ -1,9 +1,9 @@
-FROM registry.gitlab.com/musicscience37_ci/cpp-base-image-docker:focal-v4-1
+FROM registry.gitlab.com/musicscience37_ci/cpp-base-image-docker:focal-v4-2
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    gcc-9=9.3.0-17ubuntu1~20.04 \
-    g++-9=9.3.0-17ubuntu1~20.04 \
+    gcc-9=9.4.0-1ubuntu1~20.04.1 \
+    g++-9=9.4.0-1ubuntu1~20.04.1 \
     lcov=1.14-2 && \
     apt-get autoremove && \
     apt-get autoclean && \
