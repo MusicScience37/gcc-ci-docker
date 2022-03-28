@@ -1,9 +1,9 @@
-FROM registry.gitlab.com/musicscience37_ci/cpp-base-image-docker:jammy-v4-1
+FROM registry.gitlab.com/musicscience37_ci/cpp-base-image-docker:jammy-v4-2
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    gcc-11=11.2.0-16ubuntu1 \
-    g++-11=11.2.0-16ubuntu1 \
+    gcc-11=11.2.0-18ubuntu1 \
+    g++-11=11.2.0-18ubuntu1 \
     lcov=1.15-1 && \
     apt-get autoremove && \
     apt-get autoclean && \
