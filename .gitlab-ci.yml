@@ -1,163 +1,90 @@
-variables:
-  HUB_REPO_NAME: musicscience37/gcc-ci
+stages:
+  - build
+  - test
 
-.build-base:
-  image: tmaier/docker-compose:latest
+include:
+  - template: Security/Container-Scanning.gitlab-ci.yml
+container_scanning:
+  variables:
+    DOCKER_IMAGE: $CI_REGISTRY_IMAGE
+  rules:
+    - if: $CI_COMMIT_BRANCH &&
+        $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  needs:
+    - "update gcc8"
+    - "update gcc9"
+    - "update gcc10"
+    - "update gcc11"
+    - "update gcc12"
+
+.test-base:
+  image: docker:latest
   stage: build
   services:
     - docker:dind
   before_script:
-    - docker info
-    - docker-compose --version
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - apk add python3 py3-pip
+    - pip3 install click
   script:
-    - docker build --pull -t "$IMAGE_NAME" "$BUILD_CONTEXT"
-    - sh run_test.sh "$BUILD_CONTEXT"
-    - docker push "$IMAGE_NAME"
-  artifacts:
-    paths:
-      - test/build_$BUILD_CONTEXT
-    when: always
-    expire_in: "30 days"
-
-.build-hub-base:
-  extends: .build-base
-  after_script:
-    - docker login -u "$HUB_USER_NAME" -p "$HUB_ACCESS_TOKEN"
-    - docker tag "$IMAGE_NAME" "$HUB_IMAGE_NAME"
-    - docker push "$HUB_IMAGE_NAME"
-
-build gcc8:
-  extends: .build-base
-  variables:
-    BUILD_CONTEXT: gcc8
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_REF_SLUG"
+    - apk add python3 py3-pip
+    - python3 ./tool.py test $IMAGE_DIR
   except:
-    - master
-    - tags
+    - main
 
-build gcc8 tag:
-  extends: .build-hub-base
-  variables:
-    BUILD_CONTEXT: gcc8
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_TAG"
-    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT-$CI_COMMIT_TAG"
+.update-base:
+  extends: .test-base
+  script:
+    - python3 ./tool.py update $IMAGE_DIR
+  except: []
   only:
-    - tags
+    - main
 
-build gcc8 master:
-  extends: .build-hub-base
+test gcc8:
+  extends: .test-base
   variables:
-    BUILD_CONTEXT: gcc8
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT"
-    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT"
-  only:
-    - master
+    IMAGE_DIR: gcc8
 
-build gcc9:
-  extends: .build-base
+update gcc8:
+  extends: .update-base
   variables:
-    BUILD_CONTEXT: gcc9
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_REF_SLUG"
-  except:
-    - master
-    - tags
+    IMAGE_DIR: gcc8
 
-build gcc9 tag:
-  extends: .build-hub-base
+test gcc9:
+  extends: .test-base
   variables:
-    BUILD_CONTEXT: gcc9
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_TAG"
-    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT-$CI_COMMIT_TAG"
-  only:
-    - tags
+    IMAGE_DIR: gcc9
 
-build gcc9 master:
-  extends: .build-hub-base
+update gcc9:
+  extends: .update-base
   variables:
-    BUILD_CONTEXT: gcc9
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT"
-    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT"
-  only:
-    - master
+    IMAGE_DIR: gcc9
 
-build gcc10:
-  extends: .build-base
+test gcc10:
+  extends: .test-base
   variables:
-    BUILD_CONTEXT: gcc10
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_REF_SLUG"
-  except:
-    - master
-    - tags
+    IMAGE_DIR: gcc10
 
-build gcc10 tag:
-  extends: .build-hub-base
+update gcc10:
+  extends: .update-base
   variables:
-    BUILD_CONTEXT: gcc10
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_TAG"
-    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT-$CI_COMMIT_TAG"
-  only:
-    - tags
+    IMAGE_DIR: gcc10
 
-build gcc10 master:
-  extends: .build-hub-base
+test gcc11:
+  extends: .test-base
   variables:
-    BUILD_CONTEXT: gcc10
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT"
-    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT"
-  only:
-    - master
+    IMAGE_DIR: gcc11
 
-build gcc11:
-  extends: .build-base
+update gcc11:
+  extends: .update-base
   variables:
-    BUILD_CONTEXT: gcc11
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_REF_SLUG"
-  except:
-    - master
-    - tags
+    IMAGE_DIR: gcc11
 
-build gcc11 tag:
-  extends: .build-hub-base
+test gcc12:
+  extends: .test-base
   variables:
-    BUILD_CONTEXT: gcc11
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_TAG"
-    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT-$CI_COMMIT_TAG"
-  only:
-    - tags
+    IMAGE_DIR: gcc12
 
-build gcc11 master:
-  extends: .build-hub-base
+update gcc12:
+  extends: .update-base
   variables:
-    BUILD_CONTEXT: gcc11
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT"
-    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT"
-  only:
-    - master
-
-build gcc12:
-  extends: .build-base
-  variables:
-    BUILD_CONTEXT: gcc12
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_REF_SLUG"
-  except:
-    - master
-    - tags
-
-build gcc12 tag:
-  extends: .build-hub-base
-  variables:
-    BUILD_CONTEXT: gcc12
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT-$CI_COMMIT_TAG"
-    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT-$CI_COMMIT_TAG"
-  only:
-    - tags
-
-build gcc12 master:
-  extends: .build-hub-base
-  variables:
-    BUILD_CONTEXT: gcc12
-    IMAGE_NAME: "$CI_REGISTRY_IMAGE:$BUILD_CONTEXT"
-    HUB_IMAGE_NAME: "$HUB_REPO_NAME:$BUILD_CONTEXT"
-  only:
-    - master
+    IMAGE_DIR: gcc12
