@@ -34,7 +34,7 @@ import click
 
 THIS_DIR = os.path.dirname(os.path.realpath(__file__))
 
-GITLAB_IMAGE_URL = "registry.gitlab.com/musicscience37/gcc-ci-docker"
+GITLAB_IMAGE_URL = "registry.gitlab.com/musicscience37projects/docker/gcc-ci-docker"
 DOCKER_HUB_IMAGE_URL = "musicscience37/gcc-ci"
 
 IMAGE_TAGS = ["gcc8", "gcc9", "gcc10", "gcc11", "gcc12"]
