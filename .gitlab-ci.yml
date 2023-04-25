@@ -10,81 +10,34 @@ container_scanning:
   rules:
     - if: $CI_COMMIT_BRANCH &&
         $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  needs:
-    - "update gcc8"
-    - "update gcc9"
-    - "update gcc10"
-    - "update gcc11"
-    - "update gcc12"
 
-.test-base:
-  image: docker:latest
+test:
   stage: build
+  rules:
+    - if: $CI_COMMIT_BRANCH &&
+        $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+  parallel:
+    matrix:
+      - IMAGE_TAG:
+        - gcc8
+        - gcc9
+        - gcc10
+        - gcc11
+        - gcc12
+        - gcc13
+  image: docker:latest
   services:
     - docker:dind
   before_script:
     - apk add python3 py3-pip
     - pip3 install click
   script:
-    - apk add python3 py3-pip
-    - python3 ./tool.py test $IMAGE_DIR
-  except:
-    - main
+    - python3 ./tool.py test $IMAGE_TAG
 
-.update-base:
-  extends: .test-base
+update:
+  extends: test
+  rules:
+    - if: $CI_COMMIT_BRANCH &&
+        $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   script:
-    - python3 ./tool.py update $IMAGE_DIR
-  except: []
-  only:
-    - main
-
-test gcc8:
-  extends: .test-base
-  variables:
-    IMAGE_DIR: gcc8
-
-update gcc8:
-  extends: .update-base
-  variables:
-    IMAGE_DIR: gcc8
-
-test gcc9:
-  extends: .test-base
-  variables:
-    IMAGE_DIR: gcc9
-
-update gcc9:
-  extends: .update-base
-  variables:
-    IMAGE_DIR: gcc9
-
-test gcc10:
-  extends: .test-base
-  variables:
-    IMAGE_DIR: gcc10
-
-update gcc10:
-  extends: .update-base
-  variables:
-    IMAGE_DIR: gcc10
-
-test gcc11:
-  extends: .test-base
-  variables:
-    IMAGE_DIR: gcc11
-
-update gcc11:
-  extends: .update-base
-  variables:
-    IMAGE_DIR: gcc11
-
-test gcc12:
-  extends: .test-base
-  variables:
-    IMAGE_DIR: gcc12
-
-update gcc12:
-  extends: .update-base
-  variables:
-    IMAGE_DIR: gcc12
+    - python3 ./tool.py update $IMAGE_TAG
