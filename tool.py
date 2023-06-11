@@ -59,7 +59,7 @@ IMAGE_LIST = [
     create_image(gcc_version=9, ubuntu_version="jammy"),
     create_image(gcc_version=10, ubuntu_version="jammy"),
     create_image(gcc_version=11, ubuntu_version="jammy"),
-    create_image(gcc_version=12, ubuntu_version="kinetic"),
+    create_image(gcc_version=12, ubuntu_version="lunar"),
     create_image(gcc_version=13, ubuntu_version="lunar"),
 ]
 
