@@ -19,12 +19,11 @@ test:
   parallel:
     matrix:
       - IMAGE_TAG:
-        - gcc8
-        - gcc9
-        - gcc10
-        - gcc11
-        - gcc12
-        - gcc13
+          - gcc8
+          - gcc9
+          - gcc10
+          - gcc11
+          - gcc12
   image: docker:latest
   services:
     - docker:dind
