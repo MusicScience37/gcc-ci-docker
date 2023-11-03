@@ -59,15 +59,15 @@ IMAGE_LIST = [
     create_image(gcc_version=9, ubuntu_version="jammy"),
     create_image(gcc_version=10, ubuntu_version="jammy"),
     create_image(gcc_version=11, ubuntu_version="jammy"),
-    create_image(gcc_version=12, ubuntu_version="lunar"),
-    create_image(gcc_version=13, ubuntu_version="lunar"),
+    create_image(gcc_version=12, ubuntu_version="mantic"),
+    create_image(gcc_version=13, ubuntu_version="mantic"),
 ]
 
 IMAGE_MAP = {image.tag: image for image in IMAGE_LIST}
 
 
 IMAGE_TAGS = [image.tag for image in IMAGE_LIST]
-LATEST_IMAGE_TAG = "gcc11"
+LATEST_IMAGE_TAG = "gcc12"
 
 
 @click.group()
