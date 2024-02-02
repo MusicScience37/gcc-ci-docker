@@ -17,12 +17,10 @@ Container images contains the following tools:
 
 The version of GCC is as following:
 
-- gcc8
 - gcc9
 - gcc10
 - gcc11
 - gcc12
-- gcc13
 
 ## Container Registries
 
