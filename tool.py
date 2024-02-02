@@ -55,7 +55,6 @@ def create_image(gcc_version: int, ubuntu_version: str) -> Image:
 
 
 IMAGE_LIST = [
-    create_image(gcc_version=8, ubuntu_version="focal"),
     create_image(gcc_version=9, ubuntu_version="jammy"),
     create_image(gcc_version=10, ubuntu_version="jammy"),
     create_image(gcc_version=11, ubuntu_version="jammy"),
