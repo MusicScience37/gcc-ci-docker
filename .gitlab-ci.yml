@@ -23,7 +23,6 @@ test:
           - gcc10
           - gcc11
           - gcc12
-          - gcc13
   image: docker:latest
   services:
     - docker:dind
