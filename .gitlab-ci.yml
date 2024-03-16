@@ -33,6 +33,7 @@ test experimental:
     matrix:
       - IMAGE_TAG:
           - gcc13
+          - gcc14
   allow_failure: true
 
 update:
@@ -49,4 +50,5 @@ update experimental:
     matrix:
       - IMAGE_TAG:
           - gcc13
+          - gcc14
   allow_failure: true
