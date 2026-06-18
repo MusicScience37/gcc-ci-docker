@@ -14,10 +14,9 @@ test:
   parallel:
     matrix:
       - IMAGE_TAG:
-          - gcc9
-          - gcc10
-          - gcc11
           - gcc12
+          - gcc13
+          - gcc14
   image: docker:latest
   services:
     - docker:dind
@@ -34,8 +33,8 @@ test experimental:
   parallel:
     matrix:
       - IMAGE_TAG:
-          - gcc13
-          - gcc14
+          - gcc15
+          - gcc16
   allow_failure: true
 
 update:
@@ -51,6 +50,6 @@ update experimental:
   parallel:
     matrix:
       - IMAGE_TAG:
-          - gcc13
-          - gcc14
+          - gcc15
+          - gcc16
   allow_failure: true

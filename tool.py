@@ -23,8 +23,7 @@
 # SOFTWARE.
 #
 
-"""Tool to create and test Docker image.
-"""
+"""Tool to create and test Docker image."""
 
 import datetime
 import dataclasses
@@ -55,12 +54,11 @@ def create_image(gcc_version: int, ubuntu_version: str) -> Image:
 
 
 IMAGE_LIST = [
-    create_image(gcc_version=9, ubuntu_version="jammy"),
-    create_image(gcc_version=10, ubuntu_version="jammy"),
-    create_image(gcc_version=11, ubuntu_version="jammy"),
     create_image(gcc_version=12, ubuntu_version="jammy"),
     create_image(gcc_version=13, ubuntu_version="noble"),
     create_image(gcc_version=14, ubuntu_version="noble"),
+    create_image(gcc_version=15, ubuntu_version="resolute"),
+    create_image(gcc_version=16, ubuntu_version="resolute"),
 ]
 
 IMAGE_MAP = {image.tag: image for image in IMAGE_LIST}
